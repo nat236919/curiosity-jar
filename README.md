@@ -1,5 +1,5 @@
 <p align="center">
-    <a href=""><img src="https://i.ibb.co/8gcnzG5/Think-Tank.png"></a>
+    <a href="#"><img src="https://i.ibb.co/NLRK5H5/Think-Tank.png"></a>
 </p>
 
 <p align="center">
@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-    <a href="">
+    <a href="#">
       <img src="https://img.shields.io/github/last-commit/nat236919/ThinkTank" alt="last commit">
     </a>
     <a href="https://github.com/trekhleb/state-of-the-art-shitcode" target="_blank">
