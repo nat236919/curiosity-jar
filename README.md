@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <em>The Exploration of Curiosity</em>
+    <em>The Collection of Curiosity</em>
 </p>
 
 <p align="center">
