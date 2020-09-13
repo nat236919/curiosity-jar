@@ -7,10 +7,10 @@ The game is played by drawing a card one by one, the winner is the one whose seq
 This seems to be a fair game; however, there is a solution that allows **player (B)** has a higher chance of winning than **player (A)**.
 
 ## Winning solution
-With this solution, player (B) guarantees to have 70% chance of winning.
-* Take a reference sequence ** RED RED BLACK **
-* Copy a second value, invert it, and put it in front of the sequence ** BLACK RED RED BLACK **
-* Remove the last value from the sequence ** BLACK RED RED **
+With this solution, **player (B)** guarantees to have 70% chance of winning.
+* Take a reference sequence **RED RED BLACK**
+* Copy a second value, invert it, and put it in front of the sequence **BLACK RED RED BLACK**
+* Remove the last value from the sequence **BLACK RED RED**
 
 <p align="center">
     <img src="https://i.ibb.co/8Xzn74K/Screen-Shot-2020-09-13-at-8-30-38-PM.png" alt="Screen-Shot-2020-09-13-at-8-30-38-PM" border="0">
