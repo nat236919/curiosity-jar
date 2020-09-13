@@ -102,7 +102,5 @@ class GameEngine:
             game_result = self._play(is_winning_method_used)
             experimental_result['player_won'] += game_result['player_has_won']
             experimental_result['computer_won'] += game_result['computer_has_won']
-        
-        print(experimental_result)
 
         return experimental_result
