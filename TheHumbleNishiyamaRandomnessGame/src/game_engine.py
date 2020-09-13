@@ -82,7 +82,7 @@ class GameEngine:
             current_game_sequence.append(drawn_card)
             # Adjust current_game_sequence to contain only three elements
             if len(current_game_sequence) > 3:
-                current_game_sequence =  current_game_sequence[-3:]
+                current_game_sequence = current_game_sequence[-3:]
             # Check the result
             if len(current_game_sequence) == 3:
                 game_result = self._check_result(computer_sequence, player_sequence, current_game_sequence)
@@ -91,3 +91,18 @@ class GameEngine:
                     break
 
         return final_result
+    
+    def _start_experiment(self, is_winning_method_used = False, n: int = 1000) -> Dict[str, int]:
+        """ Start an experiment and Display the result """
+        experimental_result = {'player_won': 0, 'computer_won': 0}
+        if not isinstance(n, int):
+            return None
+        
+        for _ in range(n):
+            game_result = self._play(is_winning_method_used)
+            experimental_result['player_won'] += game_result['player_has_won']
+            experimental_result['computer_won'] += game_result['computer_has_won']
+        
+        print(experimental_result)
+
+        return experimental_result
