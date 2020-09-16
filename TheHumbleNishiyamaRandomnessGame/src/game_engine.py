@@ -92,7 +92,7 @@ class GameEngine:
 
         return final_result
     
-    def _start_experiment(self, is_winning_method_used = False, n: int = 1000) -> Dict[str, int]:
+    def start_experiment(self, is_winning_method_used = False, n: int = 1000) -> Dict[str, int]:
         """ Start an experiment and Display the result """
         experimental_result = {'player_won': 0, 'computer_won': 0}
         if not isinstance(n, int):

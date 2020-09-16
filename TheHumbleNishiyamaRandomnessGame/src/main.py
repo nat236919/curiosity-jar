@@ -17,10 +17,10 @@ game_engine = GameEngine()
 # Main function
 def main() -> None:
     # Without a winning method
-    without_winning_method_res = game_engine._start_experiment(is_winning_method_used=False)
+    without_winning_method_res = game_engine.start_experiment(is_winning_method_used=False)
     
     # With a winning method
-    with_winning_method_res = game_engine._start_experiment(is_winning_method_used=True)
+    with_winning_method_res = game_engine.start_experiment(is_winning_method_used=True)
 
     # Prepare DataFrame
     df_without_winning_method = pd.DataFrame([without_winning_method_res])
