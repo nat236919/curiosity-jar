@@ -64,7 +64,7 @@ class GameEngine:
 
         return result
     
-    def _play(self, is_winning_method_used = False) -> None:
+    def _play(self, is_winning_method_used: bool = False) -> Dict[str: bool]:
         """ Play the game """
         deck = self.all_cards.copy() # Get a dek of cards
         random.shuffle(deck) # Shuffle a deck (in place)
@@ -92,7 +92,7 @@ class GameEngine:
 
         return final_result
     
-    def start_experiment(self, is_winning_method_used = False, n: int = 1000) -> Dict[str, int]:
+    def start_experiment(self, is_winning_method_used: bool = False, n: int = 1000) -> Dict[str, int]:
         """ Start an experiment and Display the result """
         experimental_result = {'player_won': 0, 'computer_won': 0}
         if not isinstance(n, int):
