@@ -25,3 +25,4 @@ It is a repository that contains various experiments and debunks using simple sc
 | --------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | MontyHallProblem                  | The Experiment on The Monty Hall problem                       | [Read Ariticle](https://nat236919.github.io/posts/2020/03/monty-hall-problem)                    |
 | TheHumble-NishiyamaRandomnessGame | The Experiment on The Humble-Nishiyama Randomness Game         | [Read Ariticle](https://nat236919.github.io/posts/2020/09/the-humble-nishiyama-randomness-game/) |
+| UnconventionalRussianRoulette     | The Experiment on The Unconventional Russian Roulette          |                                     (Work in Progress)                                           |
