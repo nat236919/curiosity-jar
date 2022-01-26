@@ -5,9 +5,13 @@ AUTHOR: Nuttaphat Arunoprayoch (@nuttaphat)
 DATE: 24-Jan-2022
 """
 
+from game_engine import RockPaperScissors
+
 
 def main():
     print("Welcome to Rock Paper Scissors!")
+    game = RockPaperScissors()
+    game.play(3)
     return None
 
 
