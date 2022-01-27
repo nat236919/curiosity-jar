@@ -11,7 +11,7 @@ from game_engine import RockPaperScissors
 def main():
     print("Welcome to Rock Paper Scissors!")
     game = RockPaperScissors()
-    game.play(3)
+    game.play(3, autoplay=True)
     return None
 
 

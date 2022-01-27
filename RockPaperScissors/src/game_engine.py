@@ -31,6 +31,7 @@ class RockPaperScissors:
                 Played {self.times_played} times.
                 You won {self.player_score} times.
                 The computer won {self.computer_score} times.
+                Draws: {self.draws} times.
                 Player won {won_rate * 100}% of the time.
             ----------------------------------------------------
             """
@@ -39,19 +40,21 @@ class RockPaperScissors:
 
         return None
 
-    def play(self, n: int = 1) -> None:
+    def play(self, n: int = 1, autoplay=False) -> None:
         """Play game n times.
 
         Args:
             n (int, optional): times to be played. Defaults to 1.
+            autoplay (bool, optional): randomly choose a hand for player
 
         Returns:
-            [None]: [description]
+            [None]
         """
         while n > 0:
             # Get choices
             computer_hand = self.__pick_hand().lower()
-            player_hand = str(input('Enter your choice [r, p, s]: ')).lower()
+            player_hand = self.__pick_hand().lower() if autoplay else str(
+                input('Enter your choice [r, p, s]: ')).lower()
 
             print(f'Player picked [{player_hand}]')
             print(f'Computer picked [{computer_hand}]')
@@ -95,13 +98,20 @@ class RockPaperScissors:
                 1: player wins,
                 2: computer wins
             }
+
+        Raises:
+            ValueError: if player_hand or computer_hand is not in choices
         """
+        if not player_hand or not computer_hand:
+            raise ValueError('Invalid input!')
+
         if player_hand == computer_hand:
             return 0
 
         return 1 if self.__player_won(player_hand, computer_hand) else 2
 
-    def __player_won(self, player_hand: str, computer_hand: str) -> bool:
+    @staticmethod
+    def __player_won(player_hand: str, computer_hand: str) -> bool:
         """Check if player wins a round
 
         Args:
@@ -120,6 +130,11 @@ class RockPaperScissors:
 
         Returns:
             str: A random hand from the list of choices.
+
+        Raises:
+            ValueError: if choices is empty
         """
+        if not self.choices:
+            raise ValueError('No choices available!')
 
         return random.choice(self.choices)
