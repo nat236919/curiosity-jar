@@ -12,7 +12,7 @@ export default {
   props: {
     color: {
       type: String,
-      default: "",
+      default: null,
     },
   },
   computed: {

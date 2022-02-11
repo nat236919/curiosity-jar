@@ -33,8 +33,8 @@
           <p>Computer Sequence:</p>
         </b-row>
         <b-row>
-          <b-col v-for="i in 3" :key="i">
-            <Card />
+          <b-col v-for="(color, i) in computerSequence" :key="i">
+            <Card :color="color" />
           </b-col>
         </b-row>
       </div>
@@ -44,8 +44,8 @@
           <p>Player Sequence:</p>
         </b-row>
         <b-row>
-          <b-col v-for="i in 3" :key="i">
-            <Card color="r" />
+          <b-col v-for="(color, i) in playerSequence" :key="i">
+            <Card :color="color" />
           </b-col>
         </b-row>
       </div>
@@ -62,10 +62,10 @@
         <b-row>
           <b-col>
             <b-button-group size="lg">
-              <b-button variant="dark" @click="">
+              <b-button variant="dark" @click="playerSelect('b')">
                 <h3>B</h3>
               </b-button>
-              <b-button variant="danger" @click="">
+              <b-button variant="danger" @click="playerSelect('r')">
                 <h3>R</h3>
               </b-button>
             </b-button-group>
@@ -90,11 +90,43 @@ export default {
   },
   data() {
     return {
+      deckLimit: 56,
       loading: false,
       gameInProgress: false,
-      playerSequence: [],
-      computerSequence: [],
+      colors: ["b", "r"], // black and red
+      decks: [],
+      currentSequence: [],
+      playerSequence: [null, null, null],
+      computerSequence: [null, null, null],
     };
+  },
+  methods: {
+    init() {
+      this.decks = this.getRandomSequence(this.deckLimit);
+      this.computerSequence = this.getRandomSequence();
+    },
+    getRandomColor() {
+      return this.colors[Math.floor(Math.random() * this.colors.length)];
+    },
+    getRandomSequence(n = 3) {
+      let sequence = [];
+      for (let i = 0; i < n; i++) {
+        sequence.push(this.getRandomColor());
+      }
+      return sequence;
+    },
+    playerSelect(color) {
+      if (this.playerSequence.length < 3) {
+        this.playerSequence.push(color);
+      } else {
+        // remove first item and add new item
+        this.playerSequence.shift();
+        this.playerSequence.push(color);
+      }
+    },
+  },
+  mounted() {
+    this.init();
   },
 };
 </script>
