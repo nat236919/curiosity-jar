@@ -186,9 +186,9 @@ export default {
 
       // Update game states
       this.deck = this.getDeck();
-
       this.gameInProgress = true;
       let roundInProgress = true;
+
       while (this.deck.length > 0 && roundInProgress) {
         // Get card to the current sequence
         let color = this.deck.pop();
@@ -202,11 +202,13 @@ export default {
         // Check result
         // If the same sequences are selected, give a win to computer first
         if (this.currentSequence.join("") === this.computerSequence.join("")) {
+          this.makeToast("Computer wins", "danger");
           this.$store.dispatch("incrementComputerWins");
           roundInProgress = false;
         } else if (
           this.currentSequence.join("") === this.playerSequence.join("")
         ) {
+          this.makeToast("Player wins", "success");
           this.$store.dispatch("incrementPlayerWins");
           roundInProgress = false;
         }
@@ -216,12 +218,20 @@ export default {
       this.gameInProgress = false;
     },
     resetGame() {
+      this.makeToast("Reset", "warning");
       this.endGame();
       this.loading = true;
       this.currentSequence = [null, null, null];
       this.playerSequence = [null, null, null];
       this.computerSequence = this.getRandomSequence();
       this.loading = false;
+    },
+    makeToast(msg = "", type = "success") {
+      this.$bvToast.toast(msg, {
+        title: "System",
+        variant: type,
+        autoHideDelay: 2000,
+      });
     },
   },
   mounted() {
