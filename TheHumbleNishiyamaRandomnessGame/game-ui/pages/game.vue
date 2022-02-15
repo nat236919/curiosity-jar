@@ -188,6 +188,7 @@ export default {
       this.deck = this.getDeck();
       this.gameInProgress = true;
       let roundInProgress = true;
+      this.$store.dispatch("incrementTotalGames");
 
       while (this.deck.length > 0 && roundInProgress) {
         // Get card to the current sequence
