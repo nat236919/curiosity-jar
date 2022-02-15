@@ -14,7 +14,20 @@
         >
       </b-row>
 
-      <hr />
+      <!-- Controllers -->
+      <b-row class="text-center">
+        <b-col>
+          <b-button
+            pill
+            variant="info"
+            :disabled="!readyToStart"
+            @click="startGame"
+            size="lg"
+          >
+            Play
+          </b-button>
+        </b-col>
+      </b-row>
 
       <!-- Current Sequence -->
       <div class="sequence-container">
@@ -22,8 +35,8 @@
           <p>Current Sequence:</p>
         </b-row>
         <b-row>
-          <b-col v-for="i in 3" :key="i">
-            <Card />
+          <b-col v-for="(color, i) in currentSequence" :key="i">
+            <Card :color="color" />
           </b-col>
         </b-row>
       </div>
@@ -87,22 +100,36 @@ export default {
         computerWins: this.$store.state.computerWins,
       };
     },
+    colors() {
+      return Object.values(this.colorKey);
+    },
+    readyToStart() {
+      return (
+        this.playerSequence.length === 3 &&
+        this.computerSequence.length === 3 &&
+        !this.playerSequence.includes(null) &&
+        !this.computerSequence.includes(null)
+      );
+    },
   },
   data() {
     return {
-      deckLimit: 56,
+      deckLimit: 52,
       loading: false,
       gameInProgress: false,
-      colors: ["b", "r"], // black and red
-      decks: [],
-      currentSequence: [],
+      colorKey: {
+        black: "b",
+        red: "r",
+      },
+      deck: [],
+      currentSequence: [null, null, null],
       playerSequence: [null, null, null],
       computerSequence: [null, null, null],
     };
   },
   methods: {
     init() {
-      this.decks = this.getRandomSequence(this.deckLimit);
+      this.deck = this.getDeck();
       this.computerSequence = this.getRandomSequence();
     },
     getRandomColor() {
@@ -115,6 +142,31 @@ export default {
       }
       return sequence;
     },
+    getColorSequence(color, n = 3) {
+      let sequence = [];
+      for (let i = 0; i < n; i++) {
+        sequence.push(color);
+      }
+      return sequence;
+    },
+    getDeck() {
+      // Get 26 reds and 26 blacks in random order
+      let blacks = this.getColorSequence(this.colorKey.black, 26);
+      let reds = this.getColorSequence(this.colorKey.red, 26);
+      let deck = this.shuffleArray(blacks.concat(reds));
+
+      return deck;
+    },
+    shuffleArray(arr) {
+      var j, x, index;
+      for (index = arr.length - 1; index > 0; index--) {
+        j = Math.floor(Math.random() * (index + 1));
+        x = arr[index];
+        arr[index] = arr[j];
+        arr[j] = x;
+      }
+      return arr;
+    },
     playerSelect(color) {
       if (this.playerSequence.length < 3) {
         this.playerSequence.push(color);
@@ -123,6 +175,41 @@ export default {
         this.playerSequence.shift();
         this.playerSequence.push(color);
       }
+    },
+    startGame() {
+      if (!this.readyToStart) return;
+
+      // Update game states
+      this.deck = this.getDeck();
+      this.gameInProgress = true;
+
+      while (this.deck.length > 0 && this.gameInProgress) {
+        // Get card to the current sequence
+        let color = this.deck.pop();
+        if (this.currentSequence.length < 3) {
+          this.currentSequence.push(color);
+        } else {
+          this.currentSequence.shift();
+          this.currentSequence.push(color);
+        }
+
+        // Check result
+        if (this.currentSequence.join("") === this.playerSequence.join("")) {
+          this.$store.dispatch("incrementPlayerWins");
+          this.endGame();
+        } else if (
+          this.currentSequence.join("") === this.computerSequence.join("")
+        ) {
+          this.$store.dispatch("incrementComputerWins");
+          this.endGame();
+        }
+      }
+    },
+    endGame() {
+      this.gameInProgress = false;
+      this.currentSequence = [null, null, null];
+      this.playerSequence = [null, null, null];
+      this.computerSequence = this.getRandomSequence();
     },
   },
   mounted() {
