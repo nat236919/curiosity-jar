@@ -1,5 +1,7 @@
 # The Humble-Nishiyama Randomness Game
 
+* Game GUI: https://humble-nishiyama-randomness-game.netlify.app/
+
 The rule of the game is simple, there is a deck of cards containing 26 black cards and 26 red ones. Two players select their own sequence consisting three colours (e.x., RED RED BLACK).
 
 The game is played by drawing a card one by one, the winner is the one whose sequence appears first.
