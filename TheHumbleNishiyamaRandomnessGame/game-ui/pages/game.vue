@@ -23,8 +23,12 @@
             :disabled="!readyToStart"
             @click="startGame"
             size="lg"
+            v-if="!gameInProgress"
           >
             Play
+          </b-button>
+          <b-button pill variant="warning" @click="resetGame" size="lg" v-else>
+            Reset
           </b-button>
         </b-col>
       </b-row>
@@ -105,6 +109,7 @@ export default {
     },
     readyToStart() {
       return (
+        !this.gameInProgress &&
         this.playerSequence.length === 3 &&
         this.computerSequence.length === 3 &&
         !this.playerSequence.includes(null) &&
@@ -181,9 +186,10 @@ export default {
 
       // Update game states
       this.deck = this.getDeck();
-      this.gameInProgress = true;
 
-      while (this.deck.length > 0 && this.gameInProgress) {
+      this.gameInProgress = true;
+      let roundInProgress = true;
+      while (this.deck.length > 0 && roundInProgress) {
         // Get card to the current sequence
         let color = this.deck.pop();
         if (this.currentSequence.length < 3) {
@@ -194,22 +200,28 @@ export default {
         }
 
         // Check result
-        if (this.currentSequence.join("") === this.playerSequence.join("")) {
-          this.$store.dispatch("incrementPlayerWins");
-          this.endGame();
-        } else if (
-          this.currentSequence.join("") === this.computerSequence.join("")
-        ) {
+        // If the same sequences are selected, give a win to computer first
+        if (this.currentSequence.join("") === this.computerSequence.join("")) {
           this.$store.dispatch("incrementComputerWins");
-          this.endGame();
+          roundInProgress = false;
+        } else if (
+          this.currentSequence.join("") === this.playerSequence.join("")
+        ) {
+          this.$store.dispatch("incrementPlayerWins");
+          roundInProgress = false;
         }
       }
     },
     endGame() {
       this.gameInProgress = false;
+    },
+    resetGame() {
+      this.endGame();
+      this.loading = true;
       this.currentSequence = [null, null, null];
       this.playerSequence = [null, null, null];
       this.computerSequence = this.getRandomSequence();
+      this.loading = false;
     },
   },
   mounted() {
