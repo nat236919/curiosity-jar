@@ -85,6 +85,13 @@
               <b-button variant="danger" @click="playerSelect('r')">
                 <h3>R</h3>
               </b-button>
+              <b-button
+                variant="outline-warning"
+                :disabled="!readyToAutoSelect"
+                @click="getStrategicSequence"
+              >
+                <h3>Auto-select</h3>
+              </b-button>
             </b-button-group>
           </b-col>
         </b-row>
@@ -106,6 +113,13 @@ export default {
     },
     colors() {
       return Object.values(this.colorKey);
+    },
+    readyToAutoSelect() {
+      return (
+        !this.gameInProgress &&
+        this.computerSequence.length === 3 &&
+        !this.computerSequence.includes(null)
+      );
     },
     readyToStart() {
       return (
@@ -153,6 +167,16 @@ export default {
         sequence.push(color);
       }
       return sequence;
+    },
+    getStrategicSequence() {
+      if (!this.readyToAutoSelect) return;
+      let altSequence = this.computerSequence[1] === "b" ? "r" : "b";
+      this.playerSequence = [
+        altSequence,
+        this.computerSequence[0],
+        this.computerSequence[1],
+      ];
+      this.makeToast("Auto-select", "info");
     },
     getDeck() {
       // Get 26 reds and 26 blacks in random order
@@ -247,6 +271,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 50px;
 }
 
 .sequence-container {
