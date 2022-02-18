@@ -79,10 +79,18 @@
         <b-row>
           <b-col>
             <b-button-group size="lg">
-              <b-button variant="dark" @click="playerSelect('b')">
+              <b-button
+                variant="dark"
+                :disabled="gameInProgress"
+                @click="playerSelect('b')"
+              >
                 <h3>B</h3>
               </b-button>
-              <b-button variant="danger" @click="playerSelect('r')">
+              <b-button
+                variant="danger"
+                :disabled="gameInProgress"
+                @click="playerSelect('r')"
+              >
                 <h3>R</h3>
               </b-button>
               <b-button
